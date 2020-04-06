@@ -1,0 +1,2 @@
+rootProject.name='LiveGolf'
+include ':app'
