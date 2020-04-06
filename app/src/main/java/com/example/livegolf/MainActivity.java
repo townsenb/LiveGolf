@@ -129,8 +129,10 @@ public class MainActivity extends AppCompatActivity {
         drive_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                vibrate(30,100);
                 driverSelected = true;
                 ironSelected = putterSelected = false;
+                swingReset();
                 drive_btn.setBackgroundColor(Color.GREEN); //green - selected
                 iron_btn.setBackgroundColor(Color.LTGRAY); //grey
                 putt_btn.setBackgroundColor(Color.LTGRAY); //grey);
@@ -140,8 +142,10 @@ public class MainActivity extends AppCompatActivity {
         iron_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                vibrate(30,100);
                 ironSelected = true;
                 driverSelected = putterSelected = false;
+                swingReset();
                 iron_btn.setBackgroundColor(Color.GREEN); //green - selected
                 drive_btn.setBackgroundColor(Color.LTGRAY); //grey
                 putt_btn.setBackgroundColor(Color.LTGRAY); //grey);
@@ -151,8 +155,10 @@ public class MainActivity extends AppCompatActivity {
         putt_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                vibrate(30,100);
                 putterSelected = true;
                 driverSelected = ironSelected = false;
+                swingReset();
                 putt_btn.setBackgroundColor(Color.GREEN); //green - selected
                 drive_btn.setBackgroundColor(Color.LTGRAY); //grey
                 iron_btn.setBackgroundColor(Color.LTGRAY); //grey);
