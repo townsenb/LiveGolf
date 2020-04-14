@@ -1,6 +1,5 @@
 package com.example.livegolf;
 
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -33,14 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private Sensor accel;
     private Sensor gyro;
 
-    private TextView accel_x_text;
-    private TextView accel_y_text;
-    private TextView accel_z_text;
-
-    private TextView gyro_x_text;
-    private TextView gyro_y_text;
-    private TextView gyro_z_text;
-
     private TextView accelVal_text;
     private TextView gyroVal_text;
 
@@ -58,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private Button iron_btn;
     private Button putt_btn;
 
+    private Button left_btn;
+    private Button right_btn;
+
     private Vibrator vibrator;
 
     private MediaPlayer drive_sound, iron_sound, putt_sound, hole_sound, ding_sound;
@@ -66,11 +60,20 @@ public class MainActivity extends AppCompatActivity {
     private boolean drive, iron, putt = false;
     private boolean driverSelected, ironSelected, putterSelected = false;
 
+    private DrawView map;
+
+    private int angleStep = 20;
+    private int angleOffset = 0;
+    public TextView angleTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        map = findViewById(R.id.mapView);
+        map.setBackgroundColor(Color.GRAY);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -79,16 +82,9 @@ public class MainActivity extends AppCompatActivity {
         sensorManager.registerListener(accelerometerListener, accel , SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(gyroscopeListener, gyro , SensorManager.SENSOR_DELAY_GAME);
 
-        accel_x_text = findViewById(R.id.Accel_x);
-        accel_y_text = findViewById(R.id.Accel_y);
-        accel_z_text = findViewById(R.id.Accel_z);
-
-        gyro_x_text = findViewById(R.id.Gyro_x);
-        gyro_y_text = findViewById(R.id.Gyro_y);
-        gyro_z_text = findViewById(R.id.Gyro_z);
-
         accelVal_text = findViewById(R.id.acc_val);
         gyroVal_text = findViewById(R.id.gyro_val);
+        angleTextView = findViewById(R.id.angleVal);
 
         distance = findViewById(R.id.distance);
 
@@ -115,8 +111,10 @@ public class MainActivity extends AppCompatActivity {
         putt_btn = findViewById(R.id.Putt_btn);
         putt_btn.setBackgroundColor(Color.LTGRAY);
 
-        swing_type = findViewById(R.id.Swing_pos);
+        left_btn = findViewById(R.id.left_btn);
+        right_btn = findViewById(R.id.right_btn);
 
+        swing_type = findViewById(R.id.Swing_pos);
 
         //Button listeners
         swing_btn.setOnClickListener(new View.OnClickListener(){
@@ -165,6 +163,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        right_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                angleOffset += angleStep;
+                map.updateAngle(angleStep);
+                map.invalidate();
+                angleTextView.setText(String.valueOf(angleOffset));
+            }
+        });
+
+        left_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                angleOffset += -1 * angleStep;
+                map.updateAngle(-1 * angleStep);
+                map.invalidate();
+                angleTextView.setText(String.valueOf(angleOffset));
+            }
+        });
+
     }
 
 
@@ -173,15 +191,12 @@ public class MainActivity extends AppCompatActivity {
         public void onSensorChanged(SensorEvent event) {
             Sensor sensor = event.sensor;
             if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-                accel_x_text.setText(String.valueOf(event.values[X]));
                 accelChange[X] = accelVals[X] - event.values[X];
                 accelVals[X] = event.values[X];
 
-                accel_y_text.setText(String.valueOf(event.values[Y]));
                 accelChange[Y] = accelVals[Y] - event.values[Y];
                 accelVals[Y] = event.values[Y];
 
-                accel_z_text.setText(String.valueOf(event.values[Z]));
                 accelChange[Z] = accelVals[Z] - event.values[Z];
                 accelVals[Z] = event.values[Z];
                 if(accelVals[Z] < accelMax){
@@ -201,13 +216,8 @@ public class MainActivity extends AppCompatActivity {
         public void onSensorChanged(SensorEvent event) {
             Sensor sensor = event.sensor;
             if (sensor.getType() == TYPE_GYROSCOPE) {
-                gyro_x_text.setText(String.valueOf(event.values[X]));
                 gyroVals[X] = event.values[X];
-
-                gyro_y_text.setText(String.valueOf(event.values[Y]));
                 gyroVals[Y] = event.values[Y];
-
-                gyro_z_text.setText(String.valueOf(event.values[Z]));
                 gyroVals[Z] = event.values[Z];
             }
         }
@@ -222,16 +232,16 @@ public class MainActivity extends AppCompatActivity {
         double clubConst = 1;
         power = Math.abs(power);
         if(driverSelected){
-            clubConst = 18;
-            return sigmoid(power,0.7) * power * clubConst;
+            clubConst = 260;
+            return sigmoid(power,0.45) * clubConst;
         }
         if(ironSelected){
-            clubConst = 8.7;
-            return sigmoid(power,1) * power * clubConst;
+            clubConst = 120;
+            return sigmoid(power,0.8) * clubConst;
         }
         if(putterSelected) {
-            clubConst = 1;
-            return sigmoid(power * clubConst,3) * power * clubConst;
+            clubConst = 2;
+            return sigmoid(power * clubConst,2) * power * clubConst;
         }
         return 0;
     }
