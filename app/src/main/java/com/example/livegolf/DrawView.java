@@ -58,7 +58,7 @@ public class DrawView extends View {
         canvas.drawBitmap(background,0,0,null);
         canvas.drawLine(x,y,width/2+angle,0,paint);
         paint.setAntiAlias(true);
-
+        drawBorders(canvas);
     }
 
     public void updateAngle(int angleOffset){

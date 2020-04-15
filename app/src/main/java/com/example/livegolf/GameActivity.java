@@ -22,7 +22,7 @@ import java.text.DecimalFormat;
 
 import static android.hardware.Sensor.TYPE_GYROSCOPE;
 
-public class MainActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     private final int X = 0;
     private final int Y = 1;
