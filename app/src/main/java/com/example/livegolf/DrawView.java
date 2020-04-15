@@ -26,8 +26,6 @@ public class DrawView extends View {
     private int x = teeX;
     private int y = teeY;
 
-    private final int pixelsToYards = 4;
-
     Bitmap background;
 
     private void init() {
@@ -67,10 +65,9 @@ public class DrawView extends View {
         angle += angleOffset;
     }
 
-    public void updatePosition(double distance, int xOffset, double swingAngle){
-        //int angleMultiplyer = 1;
-        x += xOffset/2;
-        y -= distance;
+    public void updatePosition(int x, int y){
+        this.x = x;
+        this.y = y;
     }
 
     public void resetHole(){

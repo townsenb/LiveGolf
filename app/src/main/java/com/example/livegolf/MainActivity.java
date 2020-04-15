@@ -28,6 +28,15 @@ public class MainActivity extends AppCompatActivity {
     private final int Y = 1;
     private final int Z = 2;
 
+    private int teeX = 383;
+    private int teeY = 1045;
+    private int holeX = 423;
+    private int holeY = 135;
+    private int x = teeX;
+    private int y = teeY;
+
+    private final int pixelsToYards = 2;
+
     private SensorManager sensorManager;
     private Sensor accel;
     private Sensor gyro;
@@ -56,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Vibrator vibrator;
 
-    private MediaPlayer drive_sound, iron_sound, putt_sound, hole_sound, ding_sound;
+    private MediaPlayer drive_sound, iron_sound, putt_sound, hole_sound, ding_sound, fail_sound;
 
     private boolean windup_lock = true;
     private boolean drive, iron, putt = false;
@@ -99,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         putt_sound = MediaPlayer.create(this, R.raw.putt);
         hole_sound = MediaPlayer.create(this, R.raw.hole);
         ding_sound = MediaPlayer.create(this, R.raw.ding);
+        fail_sound = MediaPlayer.create(this,R.raw.fail);
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -190,10 +200,8 @@ public class MainActivity extends AppCompatActivity {
         reset_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                angleOffset = 0;
-                angleTextView.setText(String.valueOf(angleOffset));
-                map.resetHole();
-                map.invalidate();
+                resetHole();
+                ding_sound.start();
             }
         });
 
@@ -291,8 +299,7 @@ public class MainActivity extends AppCompatActivity {
         drive = true;
         windup_lock = true;
         displaySwingInfo("Driver: ",accelChange[Z],gyroVals[X],accelMax);
-        map.updatePosition(calculateDistance(accelMax),angleOffset,0);
-        map.invalidate();
+        makeSwing();
     }
 
     private void swingIron(){
@@ -306,8 +313,7 @@ public class MainActivity extends AppCompatActivity {
         iron = true;
         windup_lock = true;
         displaySwingInfo("Iron: ",accelChange[Z],gyroVals[X],accelMax);
-        map.updatePosition(calculateDistance(accelMax),angleOffset,0);
-        map.invalidate();
+        makeSwing();
     }
 
     private void swingPutt(){
@@ -321,8 +327,7 @@ public class MainActivity extends AppCompatActivity {
         putt = true;
         windup_lock = true;
         displaySwingInfo("Putter: ",accelChange[Z],gyroVals[X],accelMax);
-        map.updatePosition(calculateDistance(accelMax),angleOffset,0);
-        map.invalidate();
+        makeSwing();
     }
 
     private void swingReset(){
@@ -334,6 +339,31 @@ public class MainActivity extends AppCompatActivity {
         accelVal_text.setText("0");
         gyroVal_text.setText("0");
         distance.setText("0 yards");
+    }
+
+    private void resetHole(){
+        angleOffset = 0;
+        angleTextView.setText(String.valueOf(angleOffset));
+        x = teeX;
+        y = teeY;
+        map.resetHole();
+        map.invalidate();
+    }
+
+
+    private void makeSwing(){
+        x += angleOffset/3;
+        y -= (int) (calculateDistance(accelMax) * pixelsToYards);
+        map.updatePosition(x,y);
+        map.invalidate();
+
+        if(getDistanceTo(x,y,holeX,holeY) <= 25){
+            hole_sound.start();
+            resetHole();
+        }else if(y <= 120 || x <= 0 || x >= 775){
+            fail_sound.start();
+            resetHole();
+        }
     }
 
     private void vibrate(int millis, int amp){
@@ -355,6 +385,10 @@ public class MainActivity extends AppCompatActivity {
     private double sigmoid(double x, double rate) {
 
         return ((1.2)/( 1 + Math.pow(Math.E,((-1*rate)*x  + 5))));
+    }
+
+    private double getDistanceTo(int x1, int y1, int x2, int y2){
+        return Math.sqrt((Math.pow(x2-x1,2)+Math.pow(y2-y1,2)));
     }
 
 
