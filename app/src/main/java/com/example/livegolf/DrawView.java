@@ -57,6 +57,7 @@ public class DrawView extends View {
         this.canvas = canvas;
         canvas.drawBitmap(background,0,0,null);
         canvas.drawLine(x,y,width/2+angle,0,paint);
+        canvas.drawCircle(x,y,7,paint);
         paint.setAntiAlias(true);
         drawBorders(canvas);
     }

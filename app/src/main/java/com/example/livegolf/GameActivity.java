@@ -3,6 +3,7 @@ package com.example.livegolf;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -35,7 +36,7 @@ public class GameActivity extends AppCompatActivity {
     private int x = teeX;
     private int y = teeY;
 
-    private int swingCount;
+    private int swingCount = 0;
 
     private final int pixelsToYards = 2;
 
@@ -83,7 +84,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
 
         map = findViewById(R.id.mapView);
         map.setBackgroundColor(Color.GRAY);
@@ -258,12 +259,12 @@ public class GameActivity extends AppCompatActivity {
             return sigmoid(power,0.45) * clubConst;
         }
         if(ironSelected){
-            clubConst = 120;
+            clubConst = 100;
             return sigmoid(power,0.8) * clubConst;
         }
         if(putterSelected) {
-            clubConst = 2;
-            return sigmoid(power * clubConst,2) * power * clubConst;
+            clubConst = 14;
+            return sigmoid(power * clubConst,0.2) * clubConst;
         }
         return 0;
     }
@@ -367,12 +368,25 @@ public class GameActivity extends AppCompatActivity {
         swingTextView.setText(String.valueOf(swingCount));
 
         if(getDistanceTo(x,y,holeX,holeY) <= 25){
+            //Win condition
             hole_sound.start();
-            resetHole();
+            gotoWinScreen(swingCount);
         }else if(y <= 120 || x <= 0 || x >= 775){
+            //out of bounds
             fail_sound.start();
-            resetHole();
+            gotoWinScreen(-1);
+        }else if(swingCount >= 8){
+            //too many swings
+            fail_sound.start();
+            gotoWinScreen(-2);
         }
+    }
+
+    private void gotoWinScreen(int code){
+        Intent intent = new Intent(this, WinActivity.class);
+        intent.putExtra("SCORE", code);
+        startActivity(intent);
+        finish();
     }
 
     private void vibrate(int millis, int amp){

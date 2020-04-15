@@ -6,178 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/Swing_btn"
-        android:layout_width="268dp"
-        android:layout_height="99dp"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="178dp"
-        android:text="Ready Swing"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/right_btn" />
-
-    <TextView
-        android:id="@+id/Swing_pos"
+    <ImageButton
+        android:id="@+id/tutorial_btn"
         android:layout_width="206dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="180dp"
-        android:text="Swing Type"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="210dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="100dp"
+        android:background="@null"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Swing_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/start_btn"
+        app:srcCompat="@drawable/tutorial" />
 
-    <Button
-        android:id="@+id/Iron_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="41dp"
-        android:text="Iron"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="260dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="142dp"
+        android:gravity="center_horizontal"
+        android:text="Live Golf"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Drive_btn" />
-
-    <Button
-        android:id="@+id/Putt_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="42dp"
-        android:text="putter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Iron_btn" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="10dp"
-        android:text="Accel:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Swing_pos" />
-
-    <TextView
-        android:id="@+id/acc_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="11dp"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/Swing_pos" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="12dp"
-        android:text="Gyro:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <TextView
-        android:id="@+id/gyro_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="11dp"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/acc_val" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="15dp"
-        android:text="Distance: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    <TextView
-        android:id="@+id/distance"
-        android:layout_width="181dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="92dp"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/Swing_pos" />
-
-    <Button
-        android:id="@+id/Drive_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Driver"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.873"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/left_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="23dp"
-        android:text="↺"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    <ImageButton
+        android:id="@+id/start_btn"
+        android:layout_width="206dp"
+        android:layout_height="210dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="40dp"
+        android:background="@null"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapView" />
-
-    <Button
-        android:id="@+id/right_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="23dp"
-        android:text="↻"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toEndOf="@+id/left_btn"
-        app:layout_constraintTop_toBottomOf="@+id/mapView" />
-
-    <view
-        android:id="@+id/mapView"
-        class="com.example.livegolf.DrawView"
-        android:layout_width="220dp"
-        android:layout_height="336dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="21dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/swingCountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="36dp"
-        android:text="# Swings"
-        app:layout_constraintStart_toEndOf="@+id/mapView"
-        app:layout_constraintTop_toBottomOf="@+id/Putt_btn" />
-
-    <Button
-        android:id="@+id/reset_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="36dp"
-        android:text="RESET"
-        app:layout_constraintStart_toEndOf="@+id/mapView"
-        app:layout_constraintTop_toBottomOf="@+id/swingCountTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:srcCompat="@drawable/ball" />
 </androidx.constraintlayout.widget.ConstraintLayout>
