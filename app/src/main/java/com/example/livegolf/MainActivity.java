@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private Button left_btn;
     private Button right_btn;
 
+    private Button reset_btn;
+
     private Vibrator vibrator;
 
     private MediaPlayer drive_sound, iron_sound, putt_sound, hole_sound, ding_sound;
@@ -113,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
         left_btn = findViewById(R.id.left_btn);
         right_btn = findViewById(R.id.right_btn);
+
+        reset_btn = findViewById(R.id.reset_btn);
 
         swing_type = findViewById(R.id.Swing_pos);
 
@@ -180,6 +184,16 @@ public class MainActivity extends AppCompatActivity {
                 map.updateAngle(-1 * angleStep);
                 map.invalidate();
                 angleTextView.setText(String.valueOf(angleOffset));
+            }
+        });
+
+        reset_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                angleOffset = 0;
+                angleTextView.setText(String.valueOf(angleOffset));
+                map.resetHole();
+                map.invalidate();
             }
         });
 
@@ -277,6 +291,8 @@ public class MainActivity extends AppCompatActivity {
         drive = true;
         windup_lock = true;
         displaySwingInfo("Driver: ",accelChange[Z],gyroVals[X],accelMax);
+        map.updatePosition(calculateDistance(accelMax),angleOffset,0);
+        map.invalidate();
     }
 
     private void swingIron(){
@@ -290,6 +306,8 @@ public class MainActivity extends AppCompatActivity {
         iron = true;
         windup_lock = true;
         displaySwingInfo("Iron: ",accelChange[Z],gyroVals[X],accelMax);
+        map.updatePosition(calculateDistance(accelMax),angleOffset,0);
+        map.invalidate();
     }
 
     private void swingPutt(){
@@ -303,6 +321,8 @@ public class MainActivity extends AppCompatActivity {
         putt = true;
         windup_lock = true;
         displaySwingInfo("Putter: ",accelChange[Z],gyroVals[X],accelMax);
+        map.updatePosition(calculateDistance(accelMax),angleOffset,0);
+        map.invalidate();
     }
 
     private void swingReset(){

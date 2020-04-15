@@ -23,6 +23,10 @@ public class DrawView extends View {
     private int height = 1175;
     private int teeX = 383;
     private int teeY = 1045;
+    private int x = teeX;
+    private int y = teeY;
+
+    private final int pixelsToYards = 4;
 
     Bitmap background;
 
@@ -54,13 +58,25 @@ public class DrawView extends View {
     public void onDraw(Canvas canvas) {
         this.canvas = canvas;
         canvas.drawBitmap(background,0,0,null);
-        canvas.drawLine(teeX, teeY, width/2 + angle, 0, paint);
-        drawBorders(canvas);
+        canvas.drawLine(x,y,width/2+angle,0,paint);
+        paint.setAntiAlias(true);
+
     }
 
     public void updateAngle(int angleOffset){
         angle += angleOffset;
-        canvas.drawLine(width/2, height - 20, width/2 + angle, 0, paint);
+    }
+
+    public void updatePosition(double distance, int xOffset, double swingAngle){
+        //int angleMultiplyer = 1;
+        x += xOffset/2;
+        y -= distance;
+    }
+
+    public void resetHole(){
+        angle = 0;
+        x = teeX;
+        y = teeY;
     }
 
     private void drawBorders(Canvas canvas){

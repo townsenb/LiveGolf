@@ -8,13 +8,13 @@
 
     <Button
         android:id="@+id/Swing_btn"
-        android:layout_width="164dp"
-        android:layout_height="100dp"
+        android:layout_width="234dp"
+        android:layout_height="103dp"
         android:layout_marginStart="162dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="162dp"
         android:layout_marginBottom="178dp"
-        android:text="RESET"
+        android:text="Ready Swing"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -170,4 +170,14 @@
         android:text="Angle"
         app:layout_constraintStart_toEndOf="@+id/mapView"
         app:layout_constraintTop_toBottomOf="@+id/Putt_btn" />
+
+    <Button
+        android:id="@+id/reset_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="36dp"
+        android:text="RESET"
+        app:layout_constraintStart_toEndOf="@+id/mapView"
+        app:layout_constraintTop_toBottomOf="@+id/angleVal" />
 </androidx.constraintlayout.widget.ConstraintLayout>
