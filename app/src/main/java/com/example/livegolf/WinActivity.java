@@ -28,8 +28,11 @@ public class WinActivity extends AppCompatActivity {
 
         returnButton = findViewById(R.id.return_btn);
 
-
-        scoreTextView.setText(String.valueOf(score));
+        if(score >= 1) {
+            scoreTextView.setText(String.valueOf(score));
+        }else{
+            scoreTextView.setText("☹️");
+        }
         descriptionTextView.setText(scoreToDescription(score));
 
 

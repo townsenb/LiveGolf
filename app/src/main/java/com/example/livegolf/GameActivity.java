@@ -383,7 +383,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void gotoWinScreen(int code){
-        Intent intent = new Intent(this, WinActivity.class);
+        Intent intent = new Intent(GameActivity.this, WinActivity.class);
         intent.putExtra("SCORE", code);
         startActivity(intent);
         finish();

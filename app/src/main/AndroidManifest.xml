@@ -24,6 +24,11 @@
             tools:ignore="LockedOrientationActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".HelpActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
