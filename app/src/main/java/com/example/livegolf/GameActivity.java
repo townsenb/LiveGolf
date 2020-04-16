@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,13 +30,14 @@ public class GameActivity extends AppCompatActivity {
     private final int Y = 1;
     private final int Z = 2;
 
-    private int middle = 335;
     private int teeX = 383;
     private int teeY = 1045;
     private int holeX = 423;
     private int holeY = 135;
     private int x = teeX;
     private int y = teeY;
+    private int viewWidth;
+    private int viewHeight;
 
     private int swingCount = 0;
 
@@ -86,7 +88,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         map = findViewById(R.id.mapView);
-        map.setBackgroundColor(Color.GRAY);
+        map.setBackgroundColor(Color.parseColor("#94E482"));
         map.resetHole();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -161,6 +163,8 @@ public class GameActivity extends AppCompatActivity {
                 iron_btn.setBackgroundColor(Color.GREEN); //green - selected
                 drive_btn.setBackgroundColor(Color.LTGRAY); //grey
                 putt_btn.setBackgroundColor(Color.LTGRAY); //grey);
+                gyroVal_text.setText(String.valueOf(map.width));
+                distance.setText(String.valueOf(map.height));
             }
         });
 
@@ -203,6 +207,17 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        map.width = map.getWidth();
+        map.height = map.getHeight();
+        gyroVal_text.setText(String.valueOf(map.width));
+        distance.setText(String.valueOf(map.height));
+        resetHole();
+        map.resetHole();
+        map.resetDimens();
     }
 
 
@@ -348,6 +363,10 @@ public class GameActivity extends AppCompatActivity {
         angleOffset = 0;
         swingCount = 0;
         swingTextView.setText(String.valueOf(swingCount));
+        teeX = (int) (map.width * (383.0/770.0));
+        teeY = (int) (map.height * (1046.0/1175.0));
+        holeX = (int) (map.width * (423.0/770.0));
+        holeY = (int) (map.height * (135.0/1175.0));
         x = teeX;
         y = teeY;
         map.resetHole();

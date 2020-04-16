@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#94E482"
     tools:context=".GameActivity">
 
     <Button
@@ -11,20 +12,20 @@
         android:layout_width="268dp"
         android:layout_height="99dp"
         android:layout_marginStart="162dp"
-        android:layout_marginTop="68dp"
         android:layout_marginEnd="162dp"
+        android:layout_marginBottom="132dp"
         android:text="Ready Swing"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/right_btn" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/Iron_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="41dp"
         android:text="Iron"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +34,7 @@
     <Button
         android:id="@+id/Putt_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="42dp"
         android:text="putter"
@@ -42,18 +43,20 @@
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="33dp"
+        android:layout_height="19dp"
         android:layout_marginStart="156dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:text="Gyro:"
+        app:layout_constraintEnd_toStartOf="@+id/gyro_val"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Swing_btn" />
 
     <TextView
         android:id="@+id/gyro_val"
-        android:layout_width="21dp"
-        android:layout_height="18dp"
+        android:layout_width="85dp"
+        android:layout_height="19dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="0"
@@ -62,12 +65,14 @@
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="78dp"
+        android:layout_height="24dp"
         android:layout_marginStart="112dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="59dp"
         android:text="Distance: "
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -83,21 +88,23 @@
 
     <Button
         android:id="@+id/Drive_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="40dp"
         android:text="Driver"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.873"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/mapView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/left_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="23dp"
+        android:layout_width="88dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
         android:text="↺"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,9 +113,9 @@
     <Button
         android:id="@+id/right_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="23dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="31dp"
         android:text="↻"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toEndOf="@+id/left_btn"
@@ -117,30 +124,32 @@
     <view
         android:id="@+id/mapView"
         class="com.example.livegolf.DrawView"
-        android:layout_width="220dp"
-        android:layout_height="336dp"
+        android:layout_width="229dp"
+        android:layout_height="356dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="21dp"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/swingCountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
+        android:layout_width="58dp"
+        android:layout_height="19dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="71dp"
         android:text="# Swings"
-        app:layout_constraintStart_toEndOf="@+id/mapView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Putt_btn" />
 
     <Button
         android:id="@+id/reset_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="41dp"
         android:text="RESET"
-        app:layout_constraintStart_toEndOf="@+id/mapView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swingCountTextView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

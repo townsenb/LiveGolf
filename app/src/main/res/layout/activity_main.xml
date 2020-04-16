@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#94E482"
     tools:context=".MainActivity">
 
     <ImageButton
@@ -12,8 +13,10 @@
         android:layout_height="210dp"
         android:layout_alignParentRight="true"
         android:layout_marginStart="100dp"
+        android:layout_marginEnd="105dp"
         android:background="@null"
         android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_btn"
         app:srcCompat="@drawable/tutorial" />
@@ -27,6 +30,7 @@
         android:layout_marginEnd="142dp"
         android:gravity="center_horizontal"
         android:text="Live Golf"
+        android:textColor="#2251A4"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,19 +43,23 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="100dp"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="105dp"
         android:background="@null"
         android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:srcCompat="@drawable/ball" />
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="394dp"
+        android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="17dp"
         android:text="*Disclaimer: We are not responsible for damaged property and /or injuries to yourself or others while playing LiveGolf"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tutorial_btn" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

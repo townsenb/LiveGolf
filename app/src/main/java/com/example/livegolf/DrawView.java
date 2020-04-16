@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import java.util.ArrayList;
 
@@ -17,8 +18,8 @@ public class DrawView extends View {
     private Paint playerPaint = new Paint();
 
     public int angle = 0;
-    private int width = 770;
-    private int height = 1175;
+    public int width = 770;
+    public int height = 1175;
     private int teeX = 383;
     private int teeY = 1045;
     private int x = teeX;
@@ -30,9 +31,7 @@ public class DrawView extends View {
     Bitmap background;
 
     private void init() {
-        Bitmap orig = BitmapFactory.decodeResource(getResources(),R.drawable.golfcourse);
-        background = Bitmap.createScaledBitmap(
-                orig, 770, 1175, false);
+        resetDimens();
         playerPaint.setColor(Color.WHITE);
         playerPaint.setStrokeWidth(5);
         playerPaint.setAntiAlias(true);
@@ -63,7 +62,7 @@ public class DrawView extends View {
         canvas.drawCircle(x,y,7, playerPaint);
         playerPaint.setAntiAlias(true);
         drawHistory(canvas);
-        drawBorders(canvas);
+        //drawBorders(canvas);
     }
 
     public void updateAngle(int angleOffset){
@@ -79,12 +78,14 @@ public class DrawView extends View {
 
     public void resetHole(){
         angle = 0;
-        x = teeX;
-        y = teeY;
         xArray.clear();
         yArray.clear();
         xArray.add(x);
         yArray.add(y);
+        teeX = (int) (width * (383.0/770.0));
+        teeY = (int) (height * (1046.0/1175.0));
+        x = teeX;
+        y = teeY;
     }
 
     private void drawHistory(Canvas canvas){
@@ -96,8 +97,14 @@ public class DrawView extends View {
         if(xArray.size() >=2){
             for(int i=1;i<xArray.size();i++){
                 canvas.drawLine(xArray.get(i-1),yArray.get(i-1),xArray.get(i),yArray.get(i),historyPaint);
+                canvas.drawCircle(xArray.get(i),yArray.get(i),4,historyPaint);
             }
         }
+    }
+
+    public void resetDimens(){
+        Bitmap orig = BitmapFactory.decodeResource(getResources(),R.drawable.golfcourse);
+        background = Bitmap.createScaledBitmap(orig, width, height, true);
     }
 
     private void drawBorders(Canvas canvas){
