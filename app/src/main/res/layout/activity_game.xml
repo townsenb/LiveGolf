@@ -13,7 +13,7 @@
         android:layout_height="99dp"
         android:layout_marginStart="162dp"
         android:layout_marginEnd="162dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="84dp"
         android:text="Ready Swing"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,51 +40,6 @@
         android:text="putter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Iron_btn" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="33dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:text="Gyro:"
-        app:layout_constraintEnd_toStartOf="@+id/gyro_val"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Swing_btn" />
-
-    <TextView
-        android:id="@+id/gyro_val"
-        android:layout_width="85dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/Swing_btn" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="78dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="59dp"
-        android:text="Distance: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    <TextView
-        android:id="@+id/distance"
-        android:layout_width="181dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="20dp"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/gyro_val" />
 
     <Button
         android:id="@+id/Drive_btn"
@@ -134,11 +89,11 @@
 
     <TextView
         android:id="@+id/swingCountTextView"
-        android:layout_width="58dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="71dp"
-        android:text="# Swings"
+        android:layout_width="25dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="28dp"
+        android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Putt_btn" />
 
@@ -151,5 +106,16 @@
         android:text="RESET"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swingCountTextView" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="67dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="right"
+        android:text="Swings:"
+        app:layout_constraintEnd_toStartOf="@+id/swingCountTextView"
+        app:layout_constraintTop_toBottomOf="@+id/Putt_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

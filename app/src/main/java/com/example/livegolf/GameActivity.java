@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,8 +35,6 @@ public class GameActivity extends AppCompatActivity {
     private int holeY = 135;
     private int x = teeX;
     private int y = teeY;
-    private int viewWidth;
-    private int viewHeight;
 
     private int swingCount = 0;
 
@@ -46,10 +43,6 @@ public class GameActivity extends AppCompatActivity {
     private SensorManager sensorManager;
     private Sensor accel;
     private Sensor gyro;
-
-    private TextView gyroVal_text;
-
-    private TextView distance;
 
     private double accelVals[];
     private double accelChange[];
@@ -77,7 +70,7 @@ public class GameActivity extends AppCompatActivity {
 
     private DrawView map;
 
-    private int angleStep = 20;
+    private int angleStep = 30;
     private int angleOffset = 0;
     public TextView swingTextView;
 
@@ -98,10 +91,7 @@ public class GameActivity extends AppCompatActivity {
         sensorManager.registerListener(accelerometerListener, accel , SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(gyroscopeListener, gyro , SensorManager.SENSOR_DELAY_GAME);
 
-        gyroVal_text = findViewById(R.id.gyro_val);
         swingTextView = findViewById(R.id.swingCountTextView);
-
-        distance = findViewById(R.id.distance);
 
         accelVals = new double[3];
         accelChange = new double[3];
@@ -136,6 +126,7 @@ public class GameActivity extends AppCompatActivity {
         swing_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                swing_btn.setBackgroundColor(Color.GRAY);
                 swingReset();
             }
         });
@@ -163,8 +154,6 @@ public class GameActivity extends AppCompatActivity {
                 iron_btn.setBackgroundColor(Color.GREEN); //green - selected
                 drive_btn.setBackgroundColor(Color.LTGRAY); //grey
                 putt_btn.setBackgroundColor(Color.LTGRAY); //grey);
-                gyroVal_text.setText(String.valueOf(map.width));
-                distance.setText(String.valueOf(map.height));
             }
         });
 
@@ -203,6 +192,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resetHole();
+                map.resetHole();
                 ding_sound.start();
             }
         });
@@ -213,8 +203,6 @@ public class GameActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
         map.width = map.getWidth();
         map.height = map.getHeight();
-        gyroVal_text.setText(String.valueOf(map.width));
-        distance.setText(String.valueOf(map.height));
         resetHole();
         map.resetHole();
         map.resetDimens();
@@ -312,7 +300,6 @@ public class GameActivity extends AppCompatActivity {
         }, 180);
         drive = true;
         windup_lock = true;
-        displaySwingInfo("Driver: ",accelChange[Z],gyroVals[X],accelMax);
         makeSwing();
     }
 
@@ -326,7 +313,6 @@ public class GameActivity extends AppCompatActivity {
         }, 180);
         iron = true;
         windup_lock = true;
-        displaySwingInfo("Iron: ",accelChange[Z],gyroVals[X],accelMax);
         makeSwing();
     }
 
@@ -340,7 +326,6 @@ public class GameActivity extends AppCompatActivity {
         }, 180);
         putt = true;
         windup_lock = true;
-        displaySwingInfo("Putter: ",accelChange[Z],gyroVals[X],accelMax);
         makeSwing();
     }
 
@@ -349,8 +334,6 @@ public class GameActivity extends AppCompatActivity {
         vibrate(25,255);
         windup_lock = false;
         drive = iron = putt = false;
-        gyroVal_text.setText("0");
-        distance.setText("0 yards");
     }
 
     private void resetHole(){
@@ -371,6 +354,7 @@ public class GameActivity extends AppCompatActivity {
         y = teeY;
         map.resetHole();
         map.invalidate();
+        swing_btn.setBackgroundColor(Color.LTGRAY);
     }
 
 
@@ -383,7 +367,7 @@ public class GameActivity extends AppCompatActivity {
         map.invalidate();
         swingCount++;
         swingTextView.setText(String.valueOf(swingCount));
-
+        swing_btn.setBackgroundColor(Color.LTGRAY);
         if(getDistanceTo(x,y,holeX,holeY) <= 25 && swingCount <= 7){
             //Win condition
             hole_sound.start();
@@ -416,10 +400,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void displaySwingInfo(String type, double accel, double gyro, double max){
-        gyroVal_text.setText(new DecimalFormat("#.##").format(gyro));
-        distance.setText(new DecimalFormat("#.##").format(calculateDistance(max)) + " yards");
-    }
 
     private double sigmoid(double x, double rate) {
 
