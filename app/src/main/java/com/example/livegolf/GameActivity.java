@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     private final int Y = 1;
     private final int Z = 2;
 
+    private int middle = 335;
     private int teeX = 383;
     private int teeY = 1045;
     private int holeX = 423;
@@ -44,7 +45,6 @@ public class GameActivity extends AppCompatActivity {
     private Sensor accel;
     private Sensor gyro;
 
-    private TextView accelVal_text;
     private TextView gyroVal_text;
 
     private TextView distance;
@@ -55,7 +55,6 @@ public class GameActivity extends AppCompatActivity {
     private double accelMax = 0;
 
     private Button swing_btn;
-    private TextView swing_type;
 
     private Button drive_btn;
     private Button iron_btn;
@@ -88,6 +87,7 @@ public class GameActivity extends AppCompatActivity {
 
         map = findViewById(R.id.mapView);
         map.setBackgroundColor(Color.GRAY);
+        map.resetHole();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -96,7 +96,6 @@ public class GameActivity extends AppCompatActivity {
         sensorManager.registerListener(accelerometerListener, accel , SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(gyroscopeListener, gyro , SensorManager.SENSOR_DELAY_GAME);
 
-        accelVal_text = findViewById(R.id.acc_val);
         gyroVal_text = findViewById(R.id.gyro_val);
         swingTextView = findViewById(R.id.swingCountTextView);
 
@@ -130,8 +129,6 @@ public class GameActivity extends AppCompatActivity {
         right_btn = findViewById(R.id.right_btn);
 
         reset_btn = findViewById(R.id.reset_btn);
-
-        swing_type = findViewById(R.id.Swing_pos);
 
         //Button listeners
         swing_btn.setOnClickListener(new View.OnClickListener(){
@@ -251,6 +248,7 @@ public class GameActivity extends AppCompatActivity {
     };
 
 
+
     private double calculateDistance(double power){
         double clubConst = 1;
         power = Math.abs(power);
@@ -259,7 +257,7 @@ public class GameActivity extends AppCompatActivity {
             return sigmoid(power,0.45) * clubConst;
         }
         if(ironSelected){
-            clubConst = 100;
+            clubConst = 85;
             return sigmoid(power,0.8) * clubConst;
         }
         if(putterSelected) {
@@ -336,8 +334,6 @@ public class GameActivity extends AppCompatActivity {
         vibrate(25,255);
         windup_lock = false;
         drive = iron = putt = false;
-        swing_type.setText("make a swing");
-        accelVal_text.setText("0");
         gyroVal_text.setText("0");
         distance.setText("0 yards");
     }
@@ -360,14 +356,16 @@ public class GameActivity extends AppCompatActivity {
 
 
     private void makeSwing(){
-        x += angleOffset/3;
+        double dist = (calculateDistance(accelMax) * pixelsToYards);
+        double angleConst = 0.001;
+        x += (dist * angleOffset * angleConst);
         y -= (int) (calculateDistance(accelMax) * pixelsToYards);
         map.updatePosition(x,y);
         map.invalidate();
         swingCount++;
         swingTextView.setText(String.valueOf(swingCount));
 
-        if(getDistanceTo(x,y,holeX,holeY) <= 25){
+        if(getDistanceTo(x,y,holeX,holeY) <= 25 && swingCount <= 7){
             //Win condition
             hole_sound.start();
             gotoWinScreen(swingCount);
@@ -375,12 +373,13 @@ public class GameActivity extends AppCompatActivity {
             //out of bounds
             fail_sound.start();
             gotoWinScreen(-1);
-        }else if(swingCount >= 8){
+        }else if(swingCount > 7){
             //too many swings
             fail_sound.start();
             gotoWinScreen(-2);
         }
     }
+
 
     private void gotoWinScreen(int code){
         Intent intent = new Intent(GameActivity.this, WinActivity.class);
@@ -399,8 +398,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void displaySwingInfo(String type, double accel, double gyro, double max){
-        swing_type.setText(type+ " - max: " + new DecimalFormat("#.##").format(max));
-        accelVal_text.setText(new DecimalFormat("#.##").format(accel));
         gyroVal_text.setText(new DecimalFormat("#.##").format(gyro));
         distance.setText(new DecimalFormat("#.##").format(calculateDistance(max)) + " yards");
     }

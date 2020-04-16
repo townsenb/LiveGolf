@@ -1,7 +1,6 @@
 package com.example.livegolf;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,13 +9,12 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-
+import java.util.ArrayList;
 
 
 public class DrawView extends View {
 
-    private Canvas canvas;
-    private Paint paint = new Paint();
+    private Paint playerPaint = new Paint();
 
     public int angle = 0;
     private int width = 770;
@@ -26,15 +24,21 @@ public class DrawView extends View {
     private int x = teeX;
     private int y = teeY;
 
+    private ArrayList<Integer> xArray;
+    private ArrayList<Integer> yArray;
+
     Bitmap background;
 
     private void init() {
         Bitmap orig = BitmapFactory.decodeResource(getResources(),R.drawable.golfcourse);
         background = Bitmap.createScaledBitmap(
                 orig, 770, 1175, false);
-        paint.setColor(Color.WHITE);
-        paint.setStrokeWidth(5);
-        paint.setAntiAlias(true);
+        playerPaint.setColor(Color.WHITE);
+        playerPaint.setStrokeWidth(5);
+        playerPaint.setAntiAlias(true);
+
+        xArray = new ArrayList<Integer>();
+        yArray = new ArrayList<Integer>();
     }
 
     public DrawView(Context context) {
@@ -54,11 +58,11 @@ public class DrawView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
-        this.canvas = canvas;
         canvas.drawBitmap(background,0,0,null);
-        canvas.drawLine(x,y,width/2+angle,0,paint);
-        canvas.drawCircle(x,y,7,paint);
-        paint.setAntiAlias(true);
+        canvas.drawLine(x,y,x+angle,0, playerPaint);
+        canvas.drawCircle(x,y,7, playerPaint);
+        playerPaint.setAntiAlias(true);
+        drawHistory(canvas);
         drawBorders(canvas);
     }
 
@@ -69,12 +73,31 @@ public class DrawView extends View {
     public void updatePosition(int x, int y){
         this.x = x;
         this.y = y;
+        xArray.add(x);
+        yArray.add(y);
     }
 
     public void resetHole(){
         angle = 0;
         x = teeX;
         y = teeY;
+        xArray.clear();
+        yArray.clear();
+        xArray.add(x);
+        yArray.add(y);
+    }
+
+    private void drawHistory(Canvas canvas){
+        Paint historyPaint = new Paint();
+        historyPaint.setColor(Color.GRAY);
+        historyPaint.setStrokeWidth(3);
+        historyPaint.setAntiAlias(true);
+
+        if(xArray.size() >=2){
+            for(int i=1;i<xArray.size();i++){
+                canvas.drawLine(xArray.get(i-1),yArray.get(i-1),xArray.get(i),yArray.get(i),historyPaint);
+            }
+        }
     }
 
     private void drawBorders(Canvas canvas){
