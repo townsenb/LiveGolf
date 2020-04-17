@@ -372,7 +372,7 @@ public class GameActivity extends AppCompatActivity {
             //Win condition
             hole_sound.start();
             gotoWinScreen(swingCount);
-        }else if(y <= 120 || x <= 0 || x >= 775){
+        }else if(y <= holeY - 20 || x <= 0 || x >= map.width){
             //out of bounds
             fail_sound.start();
             gotoWinScreen(-1);
