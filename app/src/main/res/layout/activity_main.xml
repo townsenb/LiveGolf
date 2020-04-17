@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#94E482"
+    android:background="@color/globalBackground"
     tools:context=".MainActivity">
 
     <ImageButton
@@ -30,7 +30,7 @@
         android:layout_marginEnd="142dp"
         android:fontFamily="@font/aldrich"
         android:gravity="center_horizontal"
-        android:text="Live Golf"
+        android:text="LiveGolf"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         android:textColor="#2251A4"
         app:layout_constraintEnd_toEndOf="parent"

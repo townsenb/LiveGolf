@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LiveGolf</string>
+    <string name="helpClub">1. Select your club in the top right.</string>
+    <string name="helpTurn">2. Tap the left and right arrow buttons to adjust your swing angle.</string>
+    <string name="helpPosition">3. Hold your device with the screen facing the direction of swing, and the top of the phone pointed straight down.</string>
+    <string name="helpReady">4. When in position, hit "Ready Swing" and make your swing! (Hint: windup is important!)</string>
 </resources>
