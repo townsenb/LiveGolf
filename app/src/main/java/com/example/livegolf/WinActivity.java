@@ -1,5 +1,6 @@
 package com.example.livegolf;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,10 +19,14 @@ public class WinActivity extends AppCompatActivity {
 
     private Button returnButton;
 
+    private MediaPlayer winSound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
+
+        winSound = MediaPlayer.create(this, R.raw.win);
         score = getIntent().getIntExtra("SCORE",0);
         scoreTextView = findViewById(R.id.scoreTextView);
         descriptionTextView = findViewById(R.id.scoreDescription);
@@ -29,6 +34,7 @@ public class WinActivity extends AppCompatActivity {
         returnButton = findViewById(R.id.return_btn);
 
         if(score >= 1) {
+            winSound.start();
             scoreTextView.setText(String.valueOf(score));
         }else{
             scoreTextView.setText("☹️");

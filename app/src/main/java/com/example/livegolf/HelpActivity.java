@@ -1,7 +1,7 @@
 package com.example.livegolf;
 
+
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +26,7 @@ public class HelpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help);
 
         progress = 0;
+
 
         backButton = findViewById(R.id.back_btn);
         nextButton = findViewById(R.id.next_btn);
